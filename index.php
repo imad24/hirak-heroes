@@ -1,6 +1,6 @@
 <?php
 include 'db.php';
-
+#name,last_name,arrested_date,special,wilaya,released,comment
 $dbhost = 'localhost';
 $dbuser = 'hero';
 $dbpass = 'Hirak19';
@@ -8,10 +8,10 @@ $dbname = 'hirak';
 
 $db = new db($dbhost, $dbuser, $dbpass, $dbname);
 
-$heroes = $db->query('SELECT * FROM heroes')->fetchAll();
+$heroes = $db->query('SELECT name,last_name,arrested_date,special,wilaya,released,comment FROM heroes ORDER BY special desc,last_name asc'  )->fetchAll();
 
 foreach ($heroes as $hero) {
-	echo $hero['name'] . '<br>';
+	// echo $hero['name'] . '<br>';
 }
 
 $db->close();
@@ -91,31 +91,43 @@ $db->close();
             <?php 
         $delay = 100;
         $files = scandir('images/detenus/');
-            foreach($files as $file) { 
-              $filename = explode(".", $file);
-              if (sizeof($filename)<=1)
-                continue;
-              $name = $filename[0];
-              $ext = $filename[1];
-              if ($ext != "jpg" && $ext != "jpeg")
-                continue;
+            // foreach($files as $file) { 
+            //   $filename = explode(".", $file);
+            //   if (sizeof($filename)<=1)
+            //     continue;
+            //   $name = $filename[0];
+            //   $ext = $filename[1];
+            //   if ($ext != "jpg" && $ext != "jpeg")
+            //     continue;
+
+            foreach ($heroes as $hero){
+                $name = $hero["name"];
+                $last_name = $hero["last_name"];
+                $filename = $name."_".$last_name;
+                $image_files = scandir('images/detenus/');
+                if (in_array($filename.".jpg", $image_files))
+                  $avatar = $filename;
+                else
+                  $avatar = "hero";
               ?>
             <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
                 <a class="image-gradient" href="#" onclick="return false;">
                   <figure>
-                    <img src="images/detenus/<?php echo $file; ?>" alt="" class="img-fluid">
+                    <img src="images/detenus/<?php echo $avatar; ?>" alt="" class="img-fluid">
                   </figure>
                   <div class="text">
                     <h3>
                       <?php 
-                        $names=explode("_", $name);
-                        echo $names[0]; 
-                        echo " "; 
-                        echo $names[1]; 
-                        $delay=$delay+50;
+                        echo $name;
+                        echo " ";
+                        echo $last_name;
+                        $delay=$delay+20;
                       ?>
                     </h3>
-                    <span>Activiste</span>
+                    <span><?php 
+                      echo "Arrêté(e) à ".$hero["wilaya"]."Depuis le ".$hero["arrested_date"];
+                    ?>
+                    </span>
                   </div>
                 </a>
               </div>
