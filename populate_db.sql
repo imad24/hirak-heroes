@@ -74,7 +74,7 @@ VALUES
 ("Sadeddine","Youcef","2019-09-17","0","ALGER","0",""),
 ("islam","Houari","2019-09-17","0","ALGER","0",""),
 ("Zohir","Houari","2019-09-17","0","ALGER","0",""),
-("Lakhdar","BOURAGÂA","2019-06-29","5","ALGER","0",""),
+("Lakhdar","BOURAGAA","2019-06-29","5","ALGER","0",""),
 ("Samir","BELARBI","2019-09-16","4","ALGER","0",""),
 ("Fodil","BOUMALA","2019-09-19","3","ALGER","0",""),
 ("Khaled","ChOUITER","2019-06-24","2","ALGER","0",""),

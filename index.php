@@ -103,17 +103,17 @@ $db->close();
             foreach ($heroes as $hero){
                 $name = $hero["name"];
                 $last_name = $hero["last_name"];
-                $filename = $name."_".$last_name;
+                $filename = strtolower($name."_".$last_name.".jpg");
                 $image_files = scandir('images/detenus/');
-                if (in_array($filename.".jpg", $image_files))
-                  $avatar = $filename;
+                if (in_array($filename, $image_files))
+                  $avatar = "images/detenus/".$filename;
                 else
-                  $avatar = "hero";
+                  $avatar = "images/hero";
               ?>
             <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
                 <a class="image-gradient" href="#" onclick="return false;">
                   <figure>
-                    <img src="images/detenus/<?php echo $avatar; ?>" alt="" class="img-fluid">
+                    <img src="<?php echo $avatar; ?>" alt="" class="img-fluid">
                   </figure>
                   <div class="text">
                     <h3>
@@ -125,7 +125,7 @@ $db->close();
                       ?>
                     </h3>
                     <span><?php 
-                      echo "Arrêté(e) à ".$hero["wilaya"]."Depuis le ".$hero["arrested_date"];
+                      echo "Arrêté(e) à ".$hero["wilaya"]." le ".$hero["arrested_date"];
                     ?>
                     </span>
                   </div>
