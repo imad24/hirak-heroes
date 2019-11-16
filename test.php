@@ -1,12 +1,10 @@
 <?php
 $files = scandir('images/');
 foreach($files as $file) {
-    if (endsWith($file, ".jpg") || endsWith($file,".jpeg"){
+    if ( (endsWith($file, ".jpg")) or (endsWith($file,".jpeg")) ){
         echo($file);
-    }
 }
 }
-
 
 function endsWith($haystack, $needle)
 {

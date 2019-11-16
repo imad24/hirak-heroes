@@ -1,3 +1,23 @@
+<?php
+include 'db.php';
+
+$dbhost = 'localhost';
+$dbuser = 'hero';
+$dbpass = 'Hirak19';
+$dbname = 'hirak';
+
+$db = new db($dbhost, $dbuser, $dbpass, $dbname);
+
+$heroes = $db->query('SELECT * FROM heroes')->fetchAll();
+
+foreach ($heroes as $hero) {
+	echo $hero['name'] . '<br>';
+}
+
+$db->close();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -69,29 +89,37 @@
 
         <div class="row">
             <?php 
-        $files = scandir('images/');
-            foreach($files as $file) { ?>
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+        $delay = 100;
+        $files = scandir('images/detenus/');
+            foreach($files as $file) { 
+              $filename = explode(".", $file);
+              if (sizeof($filename)<=1)
+                continue;
+              $name = $filename[0];
+              $ext = $filename[1];
+              if ($ext != "jpg" && $ext != "jpeg")
+                continue;
+              ?>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
                 <a class="image-gradient" href="#" onclick="return false;">
                   <figure>
-                    <img src="images/<?php $file ?>" alt="" class="img-fluid">
+                    <img src="images/detenus/<?php echo $file; ?>" alt="" class="img-fluid">
                   </figure>
                   <div class="text">
-                    <?php
-                    echo("heelo");
-                    names=explode("_", $file);
-                    ?>
-                    <h3><?php echo(names[0]," ",names[1]); ?></h3>
+                    <h3>
+                      <?php 
+                        $names=explode("_", $name);
+                        echo $names[0]; 
+                        echo " "; 
+                        echo $names[1]; 
+                        $delay=$delay+50;
+                      ?>
+                    </h3>
                     <span>Activiste</span>
                   </div>
                 </a>
               </div>
            <?php }?>
-
-
-
-
-
         </div>
       </div>
     </div>
