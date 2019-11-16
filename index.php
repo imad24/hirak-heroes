@@ -6,6 +6,11 @@ $dbuser = 'hero';
 $dbpass = 'Hirak19';
 $dbname = 'hirak';
 
+$dbhost = '91.216.107.248';
+$dbuser = 'hirak1266483';
+$dbpass = 'lvpgyseaiz';
+$dbname = 'hirak1266483';
+
 $db = new db($dbhost, $dbuser, $dbpass, $dbname);
 
 $heroes = $db->query('SELECT name,last_name,arrested_date,special,wilaya,released,comment FROM heroes ORDER BY special desc,last_name asc'  )->fetchAll();
@@ -108,7 +113,7 @@ $db->close();
                 if (in_array($filename, $image_files))
                   $avatar = "images/detenus/".$filename;
                 else
-                  $avatar = "images/hero";
+                  $avatar = "images/hero.jpg";
               ?>
             <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
                 <a class="image-gradient" href="#" onclick="return false;">
