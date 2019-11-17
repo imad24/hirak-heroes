@@ -150,7 +150,7 @@ $db->close();
           <div class="col-lg-4">
             <div class="mb-5">
               <h3 class="footer-heading mb-4">Hirak Heroes</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+              <p>Sources: Comité National pour la Libération des Détenus. Le CNLD a comme mission d’assurer la solidarité entre et avec toutes les familles des détenus d’opinion et politiques, d’informer l’opinion publique nationale et internationale des actions à mener pour la libération de ces détenus.</p>
             </div>
           </div>
           <div class="col-lg-4 mb-5 mb-lg-0">
@@ -163,7 +163,7 @@ $db->close();
             <h3 class="footer-heading mb-4">Contactez-Nous</h3>
 
                 <div>
-                  <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+                  <a href="https://www.facebook.com/comitenationalpourlaliberationdesdetenusCNLD/" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
