@@ -13,11 +13,7 @@ $dbname = 'hirak';
 
 $db = new db($dbhost, $dbuser, $dbpass, $dbname);
 
-$heroes = $db->query('SELECT name,last_name,arrested_date,special,wilaya,released,comment FROM heroes ORDER BY special desc,last_name asc'  )->fetchAll();
-
-foreach ($heroes as $hero) {
-	// echo $hero['name'] . '<br>';
-}
+$heroes = $db->query('SELECT name,last_name,arrested_date,special,wilaya,released,comment,id FROM heroes ORDER BY special desc,last_name asc'  )->fetchAll();
 
 $db->close();
 
@@ -79,7 +75,7 @@ $db->close();
     </div>
 
     <div class="site-block-profile-pic" data-aos="fade" data-aos-delay="200">
-      <a href="about.html"><img src="images/profile.jpg" alt="Image"></a>
+      <a href="#" onclick="return false;"><img src="images/profile.jpg" alt="Image"></a>
     </div>
 
     <div class="site-section border-bottom">
@@ -96,15 +92,6 @@ $db->close();
             <?php 
         $delay = 100;
         $files = scandir('images/detenus/');
-            // foreach($files as $file) { 
-            //   $filename = explode(".", $file);
-            //   if (sizeof($filename)<=1)
-            //     continue;
-            //   $name = $filename[0];
-            //   $ext = $filename[1];
-            //   if ($ext != "jpg" && $ext != "jpeg")
-            //     continue;
-
             foreach ($heroes as $hero){
                 $name = $hero["name"];
                 $last_name = $hero["last_name"];
@@ -115,27 +102,29 @@ $db->close();
                 else
                   $avatar = "images/hero.jpg";
               ?>
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
-                <a class="image-gradient" href="#" onclick="return false;">
+            <div  class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
+                <div class="image-gradient">
                   <figure>
                     <img src="<?php echo $avatar; ?>" alt="" class="img-fluid">
                   </figure>
                   <div class="text">
-                    <h3>
-                      <?php 
+                    <h3><?php 
+                        $arrested_date = strtotime($hero["arrested_date"]);
+                        $arrested_fdate = date('d-m-Y',$arrested_date);
                         echo $name;
                         echo " ";
                         echo $last_name;
                         $delay=$delay+20;
-                      ?>
-                    </h3>
+                      ?></h3>
                     <span><?php 
-                      echo "Arrêté(e) à ".$hero["wilaya"]." le ".$hero["arrested_date"];
-                    ?>
-                    </span>
+                      echo "Arrêté(e) à ".$hero["wilaya"]." le ".$arrested_fdate;
+                    ?></span>
+                    <p style="font-size:8px;"><a href="edit.php?id=<?php echo $hero["id"];?>">&#9998;</a></p>
                   </div>
-                </a>
-              </div>
+            </div>
+                </div>
+
+
            <?php }?>
         </div>
       </div>
