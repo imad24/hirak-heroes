@@ -6,10 +6,10 @@ $dbuser = 'hero';
 $dbpass = 'Hirak19';
 $dbname = 'hirak';
 
-$dbhost = '91.216.107.248';
-$dbuser = 'hirak1266483';
-$dbpass = 'lvpgyseaiz';
-$dbname = 'hirak1266483';
+// $dbhost = '91.216.107.248';
+// $dbuser = 'hirak1266483';
+// $dbpass = 'lvpgyseaiz';
+// $dbname = 'hirak1266483';
 
 $db = new db($dbhost, $dbuser, $dbpass, $dbname);
 

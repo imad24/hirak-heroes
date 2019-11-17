@@ -55,7 +55,7 @@ VALUES
 ("Kheireddine","MEDJANI","2019-09-13","0","ALGER","0",""),
 ("Bachir","ARHAB","2019-09-13","0","ALGER","0",""),
 ("Kader","RASSELMA","2019-09-13","0","ALGER","0",""),
-("Hakim","MOHOUBI","2019-09-13","0","ALGER","0",""),
+("Hakim","MIHOUBI","2019-09-13","0","ALGER","0",""),
 ("SidAhmed","BOUHRAOUA","2019-09-13","0","ALGER","0",""),
 ("Rabah","MAHROUCHE","2019-09-13","0","ALGER","0",""),
 ("Wafi","TIGRINE","2019-09-13","0","ALGER","0",""),
