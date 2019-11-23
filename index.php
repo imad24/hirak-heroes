@@ -1,17 +1,7 @@
 <?php
 include 'db.php';
-#name,last_name,arrested_date,special,wilaya,released,comment
-$dbhost = 'localhost';
-$dbuser = 'hero';
-$dbpass = 'Hirak19';
-$dbname = 'hirak';
 
-// $dbhost = '91.216.107.248';
-// $dbuser = 'hirak1266483';
-// $dbpass = 'lvpgyseaiz';
-// $dbname = 'hirak1266483';
-
-$db = new db($dbhost, $dbuser, $dbpass, $dbname);
+$db = new db();
 
 $heroes = $db->query('SELECT name,last_name,arrested_date,special,wilaya,released,comment,id FROM heroes ORDER BY special desc,last_name asc'  )->fetchAll();
 
@@ -22,7 +12,7 @@ $db->close();
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Hirak-Heroes &mdash; </title>
+    <title>Hirak-Heroes &mdash; Hommage aux détenu(e)s d'opinion Algériens </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -46,23 +36,22 @@ $db->close();
     <link rel="stylesheet" href="css/aos.css">
 
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153197177-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-153197177-1');
+    </script>
+
     
   </head>
   <body>
   
   <div class="site-wrap">
-    <div class="site-mobile-menu">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-    
-    <header class="site-navbar py-3" role="banner">
-      
-    </header>
 
     <div class="site-blocks-cover overlay inner-page-cover" style="background-image: url('images/cover.jpg');" data-stellar-background-ratio="0.5">
       <div class="container">
@@ -81,51 +70,52 @@ $db->close();
     <div class="site-section border-bottom">
       <div class="container">
         <div class="row text-center justify-content-center mb-5">
-          <div class="col-md-7" data-aos="fade-up">
-            <h2>حنا هوما الابتلاء اه يا حكومة</h2>
-            <h2>والنارهادي متطفاش </h2>
-            
-          </div>
-        </div>
+            <div class="col-md-7" data-aos="fade-up">
+              <h2>حنا هوما الابتلاء اه يا حكومة</h2>
+              <h2>والنارهادي متطفاش </h2>
+            </div>
+          </div>    
 
         <div class="row">
-            <?php 
-        $delay = 100;
-        $files = scandir('images/detenus/');
-            foreach ($heroes as $hero){
-                $name = $hero["name"];
-                $last_name = $hero["last_name"];
-                $filename = strtolower($name."_".$last_name.".jpg");
-                $image_files = scandir('images/detenus/');
-                if (in_array($filename, $image_files))
-                  $avatar = "images/detenus/".$filename;
-                else
-                  $avatar = "images/hero.jpg";
-              ?>
-            <div  class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
-                <div class="image-gradient">
-                  <figure>
-                    <img src="<?php echo $avatar; ?>" alt="" class="img-fluid">
-                  </figure>
-                  <div class="text">
-                    <h3><?php 
-                        $arrested_date = strtotime($hero["arrested_date"]);
-                        $arrested_fdate = date('d-m-Y',$arrested_date);
-                        echo $name;
-                        echo " ";
-                        echo $last_name;
-                        $delay=$delay+20;
-                      ?></h3>
-                    <span><?php 
-                      echo "Arrêté(e) à ".$hero["wilaya"]." le ".$arrested_fdate;
-                    ?></span>
-                    <p style="font-size:8px;"><a href="edit.php?id=<?php echo $hero["id"];?>">&#9998;</a></p>
+          <?php 
+          $delay = 0;
+          $files = scandir('images/detenus/');
+              foreach ($heroes as $hero){
+                  $name = $hero["name"];
+                  $last_name = $hero["last_name"];
+                  $filename = strtolower($name."_".$last_name.".jpg");
+                  $image_files = scandir('images/detenus/');
+                  if (in_array($filename, $image_files))
+                    $avatar = "images/detenus/".$filename;
+                  else
+                    $avatar = "images/hero.jpg";
+                ?>
+              <div  class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
+                  <div class="image-gradient">
+                    <figure>
+                      <img src="<?php echo $avatar; ?>" alt="" class="img-fluid">
+                    </figure>
+                    <div class="text">
+                      <h3><?php 
+                          $arrested_date = strtotime($hero["arrested_date"]);
+                          $arrested_fdate = date('d-m-Y',$arrested_date);
+                          echo $name;
+                          echo " ";
+                          echo $last_name;
+                          $delay=$delay+0;
+                        ?></h3>
+                      <span><?php 
+                        echo "Arrêté(e) à ".$hero["wilaya"]." le ".$arrested_fdate;
+                      ?></span>
+                    </div>
+                      <span style="font-size:8px; position:absolute; right:5px; bottom:0px; color:#eee; z-index:3">
+                        <a href="edit.php?id=<?php echo $hero["id"];?>" target="_blank">edit</a>
+                      </span>
                   </div>
-            </div>
-                </div>
+              </div>
 
 
-           <?php }?>
+            <?php }?>
         </div>
       </div>
     </div>

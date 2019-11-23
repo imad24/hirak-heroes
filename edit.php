@@ -1,17 +1,7 @@
 <?php
 include 'db.php';
-#name,last_name,arrested_date,special,wilaya,released,comment
-$dbhost = 'localhost';
-$dbuser = 'hero';
-$dbpass = 'Hirak19';
-$dbname = 'hirak';
 
-// $dbhost = '91.216.107.248';
-// $dbuser = 'hirak1266483';
-// $dbpass = 'lvpgyseaiz';
-// $dbname = 'hirak1266483';
-
-$db = new db($dbhost, $dbuser, $dbpass, $dbname);
+$db = new db();
 
 $id = isset($_GET["id"]) ? $_GET["id"]: null;
 
@@ -20,13 +10,15 @@ if( isset($_POST["submit"]) ){
   echo "printed";
 }
 
-
-
 if(isset($id)){
     $hero = $db->query('SELECT name,last_name,occupation,wilaya,birthdate,arrested_date,court,released_date,reason,sentence,comment,id 
     FROM heroes 
     WHERE id = ?', $id
     )->fetchArray();
+    if (count($hero)<=0)
+      header("HTTP/1.0 404 Not Found");
+      include_once("404.html");
+      exit();
 }else{
   die();
 }
