@@ -1229,12 +1229,13 @@ a {
       z-index: 1; }
   .image-gradient .text {
     position: absolute;
-    top: 50%;
+    bottom: 5%;
     width: 100%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    text-align: center;
+    -webkit-transform: translateY(-0%);
+    -ms-transform: translateY(-0%);
+    transform: translateY(-0%);
+    transform: translateX(3%);
+    text-align: left;
     z-index: 3; }
     .image-gradient .text h3 {
       font-size: 18px;

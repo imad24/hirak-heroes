@@ -17,7 +17,7 @@ if(isset($id)){
     )->fetchArray();
     if (count($hero)<=0)
       header("HTTP/1.0 404 Not Found");
-      include_once("404.html");
+      include_once("static/404.html");
       exit();
 }else{
   die();
