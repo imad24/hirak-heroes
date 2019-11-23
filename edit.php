@@ -1,5 +1,6 @@
 <?php
-include 'db.php';
+require('db.php');
+include('auth.php');
 
 $db = new db();
 

@@ -8,6 +8,7 @@ class db {
     protected $connection;
 	protected $query;
 	public $query_count = 0;
+	public $con;
 	
 	public function __construct($dbhost = 'localhost', $dbuser = 'hero', $dbpass = 'Hirak19', $dbname = 'hirak', $charset = 'utf8') {
 		$this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
@@ -15,6 +16,8 @@ class db {
 			die('Failed to connect to MySQL - ' . $this->connection->connect_error);
 		}
 		$this->connection->set_charset($charset);
+		//for compatibility matters
+		$this->con = $this->connection;
 	}
 	
     public function query($query) {
