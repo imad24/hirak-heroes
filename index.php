@@ -88,7 +88,7 @@ $db->close();
                   if (in_array($filename, $image_files))
                     $avatar = "images/detenus/".$filename;
                   else
-                    $avatar = "images/hero.jpg";
+                    $avatar = "images/600x500_hero.jpg";
                 ?>
               <div  class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
                   <div class="image-gradient">
@@ -108,8 +108,8 @@ $db->close();
                         echo "Arrêté(e) à ".$hero["wilaya"]." le ".$arrested_fdate;
                       ?></span>
                     </div>
-                      <span style="font-size:8px; position:absolute; right:5px; bottom:0px; color:#eee; z-index:3">
-                        <a href="edit.php?id=<?php echo $hero["id"];?>" target="_blank">edit</a>
+                      <span style="font-size:8px; position:absolute; right:5px; top:0px; color:#eeeeee; z-index:3">
+                        <a href="edit.php?id=<?php echo $hero["id"];?>" target="_blank">&#10010;</a>
                       </span>
                   </div>
               </div>
