@@ -8,7 +8,22 @@ $id = isset($_GET["id"]) ? $_GET["id"]: null;
 
 if( isset($_POST["submit"]) ){
   $id = $_POST["id"];
-  echo "printed";
+  $fname = $_REQUEST['fname'];
+  $lname = $_REQUEST['lname'];
+  $occupation = strlen($_REQUEST['occupation'])>0 ? $_REQUEST['occupation'] : 'ACTIVISTE';
+  $wilaya = $_REQUEST['wilaya'];
+  $birthdate = strlen($_REQUEST['birthdate'])>0 ? $_REQUEST['birthdate'] : null;
+  $arrested_date = isset($_REQUEST['arrested_date']) ? $_REQUEST['arrested_date'] : null;
+  $court = $_REQUEST['court'];
+  $released_date = strlen($_REQUEST['released_date'])>0 ? $_REQUEST['released_date'] : null;
+  $charges = $_REQUEST['charges'];
+  $sentence = $_REQUEST["sentence"];
+  $comments = $_REQUEST["comments"];
+
+  $update= $db->query("UPDATE heroes SET 
+                      name=?, last_name=?, occupation=?, wilaya=?, birthdate=?, arrested_date=?, court=?, released_date=?, reason=?, sentence=?, comment=?
+                      WHERE id=?",
+                      $fname, $lname, $occupation, $wilaya, $birthdate, $arrested_date, $court, $released_date, $charges, $sentence, $comments, $id);
 }
 
 if(isset($id)){
@@ -119,7 +134,7 @@ $db->close();
                   </div>
                   <div class="col-md-6 mb-3 mb-md-0">
                     <label class="text-black" for="arrested_date">Arrestation date *</label>
-                    <input type="date" id="arrested_date" class="form-control" value="<?php echo $hero["arrested_date"]; ?>"  required>
+                    <input type="date" id="arrested_date" name="arrested_date" class="form-control" value="<?php echo $hero["arrested_date"]; ?>"  required>
                   </div>
 
                 </div>
@@ -132,7 +147,7 @@ $db->close();
                   </div>
                   <div class="col-md-6">
                     <label class="text-black" for="released_date">Release date</label>
-                    <input type="date" id="released_date" class="form-control" value="<?php echo $hero["released_date"]; ?>" >
+                    <input type="date" id="released_date" name="released_date" class="form-control" value="<?php echo $hero["released_date"]; ?>" >
                   </div>
                 </div>
 
@@ -156,7 +171,7 @@ $db->close();
                 <div class="row form-group">
                   <div class="col-md-12">
                     <label class="text-black" for="comments">Comments</label> 
-                    <textarea name="message" id="comments" name="comments" cols="30" rows="7" class="form-control" placeholder="Any comments here"><?php echo $hero["comment"];?></textarea>
+                    <textarea id="comments" name="comments" cols="30" rows="7" class="form-control" placeholder="Any comments here"><?php echo $hero["comment"];?></textarea>
                   </div>
                 </div>
 

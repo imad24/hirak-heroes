@@ -142,13 +142,18 @@ $db->close();
           <h3 class="footer-heading mb-4">Administrateur</h3>
           <?php 
                 if(!isset($_SESSION["username"])){
-                  echo "<a href='login.php'>Login</a>";
-              } else{
-                echo "<a href='view.php'> Pending Edits</a>";
-                echo "<br/>";
-                echo "<a href='logout.php'>Logout</a>";
-              }
-          ?>    
+          ?>
+                  <a href='login.php'>Login</a>
+                  <br/>
+                  <a href="insert.php">Add New Hero</a>
+          <?php } else{  ?>
+                <a href='view.php'> Pending Edits</a>
+                <br/>
+                <a href="insert.php">Add New Hero</a>
+                <br/>
+                <a href='logout.php'>Logout</a>
+          <?php } ?>
+
           </div>
           
           <div class="col-lg-4 mb-5 mb-lg-0">

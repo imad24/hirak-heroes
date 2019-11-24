@@ -17,7 +17,7 @@ $con = $db->con;
 </head>
 <body>
 <div class="form">
-<h2>View New Heroes</h2>
+<h2> <a href="index.php">View New Heroes </a></h2>
 <table width="100%" border="1" style="border-collapse:collapse;">
 <thead>
 <tr>

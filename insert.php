@@ -1,14 +1,11 @@
 <?php
 require('db.php');
-include('auth.php');
-
+session_start();
 $db = new db();
 $con = $db->con;
 
-
 if(isset($_POST['submit']))
 {
-echo $_REQUEST['birthdate'];
 $fname = $_REQUEST['fname'];
 $lname = $_REQUEST['lname'];
 $occupation = strlen($_REQUEST['occupation'])>0 ? $_REQUEST['occupation'] : 'ACTIVISTE';
@@ -21,14 +18,25 @@ $charges = $_REQUEST['charges'];
 $sentence = $_REQUEST["sentence"];
 $comments = $_REQUEST["comments"];
 
+if(!isset($_SESSION["username"])){
+  $insert= $db->query("INSERT INTO new_heroes 
+            (name, last_name, occupation, wilaya, birthdate, arrested_date, court, released_date, reason, sentence, comment) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            $fname, $lname, $occupation, $wilaya, $birthdate, $arrested_date, $court, $released_date, $charges, $sentence, $comments
+  );
+}else{
+  $insert = $db->query("INSERT INTO heroes 
+            (name, last_name, occupation, wilaya, birthdate, arrested_date, court, released_date, reason, sentence, comment) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            $fname, $lname, $occupation, $wilaya, $birthdate, $arrested_date, $court, $released_date, $charges, $sentence, $comments
+  );
 
-$db->query("INSERT INTO new_heroes 
-          (name, last_name, occupation, wilaya, birthdate, arrested_date, court, released_date, reason, sentence, comment) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-          $fname, $lname, $occupation, $wilaya, $birthdate, $arrested_date, $court, $released_date, $charges, $sentence, $comments
-);
+}
 
-echo "hero inserted succesfully";
+if ($insert->affectedRows()==1){
+  $alert = "New Hero has been successfuly added !";
+}
+  
 // header("Location: edit.php?id=$con->insert_id");
 }
 
@@ -78,16 +86,22 @@ $db->close();
       <div class="row justify-content-center">
         <div class="col-md-7">
           
-            <div class="container">
-            <div class="row text-center justify-content-center mb-5">
-                <div class="col-md-7" data-aos="fade-up">
-                    <h2>
-                        <a href="index.php">
-                            Hirak Heroes 
-                        </a> 
-                    </h2>
-                </div>
-            </div>
+      <div class="container">
+          <div class="row text-center justify-content-center mb-5">
+              <div class="col-md-7" data-aos="fade-up">
+                  <h2>
+                      <a href="index.php">
+                          Hirak Heroes 
+                      </a> 
+                  </h2>
+              </div>
+          </div>
+          <?php if (isset($alert) && strlen($alert)>0) { ?>
+          <div class="row">
+              <span class="alert alert-success"><?php echo $alert; ?></span>
+          </div>
+          <br/>
+          <?php } ?>
           <div class="row">
             <div class="col-lg-8 mb-5">
               <form action="insert.php" method="POST">
@@ -120,7 +134,7 @@ $db->close();
                   </div>
                   <div class="col-md-6 mb-3 mb-md-0">
                     <label class="text-black" for="arrested_date">Arrestation date *</label>
-                    <input type="date" id="arrested_date" class="form-control"  required>
+                    <input type="date" id="arrested_date" name="arrested_date" class="form-control"  required>
                   </div>
 
                 </div>
