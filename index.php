@@ -1,5 +1,6 @@
 <?php
 include 'db.php';
+session_start();
 
 $db = new db();
 
@@ -108,9 +109,14 @@ $db->close();
                         echo "Arrêté(e) à ".$hero["wilaya"]." le ".$arrested_fdate;
                       ?></span>
                     </div>
-                      <span style="font-size:8px; position:absolute; right:5px; top:0px; color:#eeeeee; z-index:3">
-                        <a href="edit.php?id=<?php echo $hero["id"];?>" target="_blank">&#10010;</a>
-                      </span>
+                      
+                      <?php
+                          if(isset($_SESSION["username"])){
+                       ?>
+                       <span style="font-size:10px; position:absolute; right:5px; top:2px; color:#eeeeee; z-index:3">
+                          <a href="edit.php?id=<?php echo $hero["id"];?>" target="_blank">&#9998;</a>
+                          </span>
+                      <?php }?>
                   </div>
               </div>
 
@@ -133,14 +139,20 @@ $db->close();
             </div>
           </div>
           <div class="col-lg-4 mb-5 mb-lg-0">
-    
-
-
+          <h3 class="footer-heading mb-4">Administrateur</h3>
+          <?php 
+                if(!isset($_SESSION["username"])){
+                  echo "<a href='login.php'>Login</a>";
+              } else{
+                echo "<a href='view.php'> Pending Edits</a>";
+                echo "<br/>";
+                echo "<a href='logout.php'>Logout</a>";
+              }
+          ?>    
           </div>
-
+          
           <div class="col-lg-4 mb-5 mb-lg-0">
             <h3 class="footer-heading mb-4">Contactez-Nous</h3>
-
                 <div>
                   <a href="https://www.facebook.com/comitenationalpourlaliberationdesdetenusCNLD/" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>

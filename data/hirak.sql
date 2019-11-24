@@ -30,20 +30,25 @@ USE `hirak`;
 -- Table structure for table `heroes`
 --
 
-DROP TABLE IF EXISTS `heroes`;
+
+
 CREATE TABLE IF NOT EXISTS `heroes` (
+  `special` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `birthdate` date DEFAULT NULL,
   `occupation` varchar(255) NOT NULL DEFAULT 'ACTIVISTE',
-  `arrested` date DEFAULT NULL,
+  `arrested_date` date DEFAULT NULL,
+  `released_date` date DEFAULT NULL,
+  `released` tinyint(4) NOT NULL DEFAULT '0',
   `sentence` varchar(255) DEFAULT NULL,
   `wilaya` varchar(255) DEFAULT NULL,
   `reason` varchar(255) DEFAULT NULL,
   `court` varchar(255) DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
