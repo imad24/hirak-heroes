@@ -97,17 +97,18 @@ $db->close();
                       <img src="<?php echo $avatar; ?>" alt="" class="img-fluid">
                     </figure>
                     <div class="text">
-                      <h3><?php 
+                      <?php 
                           $arrested_date = strtotime($hero["arrested_date"]);
                           $arrested_fdate = date('d-m-Y',$arrested_date);
-                          echo $name;
-                          echo " ";
-                          echo $last_name;
-                          $delay=$delay+0;
-                        ?></h3>
-                      <span><?php 
-                        echo "Arrêté(e) à ".$hero["wilaya"]." le ".$arrested_fdate;
-                      ?></span>
+                        ?>
+                      <h3 style="text-transform:capitalize;">
+                          <?php echo $name." ".strtoupper($last_name);?> 
+                      </h3>
+                      <span>
+                        <?php  
+                          echo "Arrêté(e) à ".$hero["wilaya"]." le ".$arrested_fdate;
+                          ?>
+                        </span>
                     </div>
                       
                       <?php
