@@ -4,8 +4,11 @@ session_start();
 
 $db = new db();
 
-$heroes = $db->query('SELECT name,last_name,arrested_date,special,wilaya,released,comment,id FROM heroes ORDER BY special desc,last_name asc'  )->fetchAll();
-
+$heroes = $db->query('SELECT name,last_name,arrested_date,special,wilaya,released,comment,id 
+                      FROM heroes 
+                      ORDER BY special desc,last_name asc'  )->fetchAll();
+$days = $db->query('SELECT SUM(DATEDIFF(CURDATE(), arrested_date)) as detention 
+                    FROM heroes')->fetchArray();
 $db->close();
 
 ?>
@@ -48,7 +51,7 @@ $db->close();
       gtag('config', 'UA-153197177-1');
     </script>
 
-    
+
   </head>
   <body>
   
@@ -69,13 +72,35 @@ $db->close();
     </div>
 
     <div class="site-section border-bottom">
+
+        <div class="row">
+              <div class="col-md-6 col-lg-4 text-center">
+                  <?php 
+                  $seconds = strtotime(date("D M d, Y G:i"), 0) - strtotime('22 February 2019', 0);
+                  $fridays = ceil($seconds / (3600 * 24 * 7) );
+                  ?>
+                    <h2> <span style="font-size:1.8em" id="fridays"> <?php echo $fridays; ?>  </span> Vendredis</h2>
+              </div> 
+              <div class="col-md-6 col-lg-4 text-center">
+                  <h2>  <span style="font-size:1.8em"  id="count"> <?php echo count($heroes); ?> </span> Détenu(e)s</h2>
+              </div> 
+              <div class="col-md-6 col-lg-4 text-center">
+                  <h2> <span style="font-size:1.8em"  id="days"> <?php echo $days["detention"]; ?>  </span> Jours</h2>
+              </div> 
+        </div>  
+
+      <br/>
+      <br/>
+      <br/>
       <div class="container">
         <div class="row text-center justify-content-center mb-5">
             <div class="col-md-7" data-aos="fade-up">
               <h2>حنا هوما الابتلاء اه يا حكومة</h2>
               <h2>والنارهادي متطفاش </h2>
             </div>
-          </div>    
+          </div>  
+
+
 
         <div class="row">
           <?php 
@@ -160,7 +185,7 @@ $db->close();
           <div class="col-lg-4 mb-5 mb-lg-0">
             <h3 class="footer-heading mb-4">Contactez-Nous</h3>
                 <div>
-                  <a href="https://www.facebook.com/comitenationalpourlaliberationdesdetenusCNLD/" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+                  <a href="https://www.facebook.com/comitenationalpourlaliberationdesdetenusCNLD/" target="_blank" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
@@ -205,6 +230,7 @@ $db->close();
   <script src="js/picturefill.min.js"></script>
   <script src="js/lightgallery-all.min.js"></script>
   <script src="js/jquery.mousewheel.min.js"></script>
+  <script src="js/countUp.min.js"></script>
 
   <script src="js/main.js"></script>
   
@@ -213,6 +239,12 @@ $db->close();
       $('#lightgallery').lightGallery();
     });
   </script>
-    
+
+  <script>
+        const countUpFridays = new CountUp('fridays', 40, options);
+        const countUpCount = new CountUp('count', 115, options);
+        const countUpDays = new CountUp('days', 11474, options);
+  </script>
+      
   </body>
 </html>
