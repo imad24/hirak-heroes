@@ -7,7 +7,7 @@ $db = new db();
 $heroes = $db->query('SELECT name,last_name,arrested_date,special,wilaya,released,comment,id 
                       FROM heroes 
                       ORDER BY special desc,last_name asc'  )->fetchAll();
-$days = $db->query('SELECT SUM(DATEDIFF(CURDATE(), arrested_date)) as detention 
+$days = $db->query('SELECT DATEDIFF(CURDATE(), "2019-02-22") as detention 
                     FROM heroes')->fetchArray();
 $db->close();
 
@@ -79,13 +79,16 @@ $db->close();
                   $seconds = strtotime(date("D M d, Y G:i"), 0) - strtotime('22 February 2019', 0);
                   $fridays = ceil($seconds / (3600 * 24 * 7) );
                   ?>
-                    <h2> <span style="font-size:1.8em" id="fridays"> <?php echo $fridays; ?>  </span> Vendredis</h2>
+                    <h2> <span style="font-size:2em" id="fridays">  </span> Vendredis</h2>
+                    <h5>de Hirak</h5>
               </div> 
               <div class="col-md-6 col-lg-4 text-center">
-                  <h2>  <span style="font-size:1.8em"  id="count"> <?php echo count($heroes); ?> </span> Détenu(e)s</h2>
+                  <h2>  <span style="font-size:2em"  id="count"></span> Détenu(e)s</h2>
+                  <h5>politiques et d'opinions</h5>
               </div> 
               <div class="col-md-6 col-lg-4 text-center">
-                  <h2> <span style="font-size:1.8em"  id="days"> <?php echo $days["detention"]; ?>  </span> Jours</h2>
+                  <h2> <span style="font-size:2em"  id="days">   </span> Jours</h2>
+                  <h5>de révolution</h5>
               </div> 
         </div>  
 
@@ -105,21 +108,20 @@ $db->close();
         <div class="row">
           <?php 
           $delay = 0;
-          $files = scandir('images/detenus/');
-              foreach ($heroes as $hero){
-                  $name = $hero["name"];
-                  $last_name = $hero["last_name"];
-                  $filename = strtolower($name."_".$last_name.".jpg");
-                  $image_files = scandir('images/detenus/');
-                  if (in_array($filename, $image_files))
-                    $avatar = "images/detenus/".$filename;
-                  else
-                    $avatar = "images/600x500_hero.jpg";
-                ?>
+          foreach ($heroes as $hero){
+              $name = $hero["name"];
+              $last_name = $hero["last_name"];
+              $filename = strtolower($name."_".$last_name.".jpg");
+              $image_files = scandir('images/detenus/');
+              if (in_array($filename, $image_files))
+                $avatar = "images/detenus/".$filename;
+              else
+                $avatar = "images/600x500_hero.jpg";
+            ?>
               <div  class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay=<?php echo $delay; ?>>
                   <div class="image-gradient">
                     <figure>
-                      <img src="<?php echo $avatar; ?>" alt="" class="img-fluid">
+                      <img src="<?php echo $avatar; ?>" alt="avatar" width="350" height="290" class="img-fluid">
                     </figure>
                     <div class="text">
                       <?php 
@@ -200,7 +202,7 @@ $db->close();
           <div class="col-md-12">
             <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            Copyright &copy;<script data-cfasync="false" ></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
@@ -230,7 +232,6 @@ $db->close();
   <script src="js/picturefill.min.js"></script>
   <script src="js/lightgallery-all.min.js"></script>
   <script src="js/jquery.mousewheel.min.js"></script>
-  <script src="js/countUp.min.js"></script>
 
   <script src="js/main.js"></script>
   
@@ -240,11 +241,27 @@ $db->close();
     });
   </script>
 
-  <script>
-        const countUpFridays = new CountUp('fridays', 40, options);
-        const countUpCount = new CountUp('count', 115, options);
-        const countUpDays = new CountUp('days', 11474, options);
+  <script type="module">
+      import { CountUp } from './js/countUp.min.js';
+      let options = {
+        "duration" : 4
+      }
+      window.onload = function() {
+            const countUpFridays = new CountUp('fridays', <?php echo $fridays; ?>, options );
+            const countUpCount = new CountUp('count',  <?php echo count($heroes); ?>, options );
+            const countUpDays = new CountUp('days', <?php echo $days["detention"]; ?>, options);
+
+            if (!countUpFridays.error) {
+              countUpFridays.start();
+            } else {
+              console.error(countUpFridays.error);
+            }
+
+            countUpFridays.start();
+            countUpCount.start();
+            countUpDays.start();	
+          }
   </script>
-      
+
   </body>
 </html>

@@ -3,7 +3,7 @@ require('db.php');
 session_start();
 $db = new db();
 $con = $db->con;
-
+$alert=array();
 if(isset($_POST['submit']))
 {
 $fname = $_REQUEST['fname'];
@@ -33,12 +33,58 @@ if(!isset($_SESSION["username"])){
 
 }
 
+
+
+#Upload Image
+$target_dir = "images/fullsize/";
+$uploaded_file = $target_dir . basename($_FILES["avatar"]["name"]);
+$target_file = $target_dir .str_replace(" ", "",$fname)."_".$lname . ".jpg";
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($uploaded_file,PATHINFO_EXTENSION));
+
+// Check if image file is a actual image or fake image
+if(isset($_FILES["avatar"])) {
+    $check = getimagesize($_FILES["avatar"]["tmp_name"]);
+    if($check !== false) {
+      $uploadOk = 1;
+    } else {
+      array_push($alert, "File is not an image.");
+        $uploadOk = 0;
+    }
+}
+
+if ($_FILES["avatar"]["size"] > 500000 * 3) {
+  array_push($alert, "Sorry, your file is too large.");
+  $uploadOk = 0;
+}
+// Allow certain file formats
+if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+&& $imageFileType != "gif" ) {
+    array_push($alert, "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+    $uploadOk = 0;
+}
+else if ($uploadOk == 0) {
+  array_push($alert, "Sorry, your file was not uploaded. Use edit page to add image");
+} else {
+  if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
+    array_push($alert, "The file ". basename( $_FILES["avatar"]["name"]). " has been uploaded to ".$target_file);
+  } else {
+    array_push($alert, "Sorry, there was an error uploading your file.");
+  }
+}
+
+
+
+
 if ($insert->affectedRows()==1){
-  $alert = "New Hero has been successfuly added !";
+  array_push($alert, "New Hero has been successfuly added !");
 }
   
 // header("Location: edit.php?id=$con->insert_id");
 }
+
+
+$alert_message=implode("<br/>", $alert);
 
 $db->close();
 
@@ -96,15 +142,15 @@ $db->close();
                   </h2>
               </div>
           </div>
-          <?php if (isset($alert) && strlen($alert)>0) { ?>
+          <?php if (isset($alert_message) && strlen($alert_message)>0) { ?>
           <div class="row">
-              <span class="alert alert-success"><?php echo $alert; ?></span>
+              <span class="alert alert-success"><?php echo $alert_message; ?></span>
           </div>
           <br/>
           <?php } ?>
           <div class="row">
             <div class="col-lg-8 mb-5">
-              <form action="insert.php" method="POST">
+              <form action="insert.php" method="POST" enctype="multipart/form-data">
                 <div class="row form-group">
                   <div class="col-md-6 mb-3 mb-md-0">
                     <label class="text-black" for="fname">First Name *</label>
@@ -179,17 +225,17 @@ $db->close();
                     <input type="submit" name="submit" value="Validate" class="btn btn-primary py-2 px-4 text-white">
                   </div>
                 </div>
-              </form>
             </div>
             <div class="col-lg-3 ml-auto">
               <div class="mb-3 bg-white">
-                <img src="images/hero.jpg" alt="" class="img-fluid">
+                  <input type="file" name="avatar" id="avatar">
+                  <img src="images/hero.jpg" alt="" class="img-fluid">
               </div>
-              
+                
             </div>
           </div>
         </div>
-    
+        </form>  
       </div>
     </div>
   </div>
