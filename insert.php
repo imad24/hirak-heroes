@@ -37,13 +37,15 @@ if(!isset($_SESSION["username"])){
 
 #Upload Image
 $target_dir = "images/fullsize/";
+$target_dir_resizd ="images/";
 $uploaded_file = $target_dir . basename($_FILES["avatar"]["name"]);
 $target_file = $target_dir .str_replace(" ", "",$fname)."_".$lname . ".jpg";
+$target_file_resized = $target_dir_resizd .str_replace(" ", "",$fname)."_".$lname . ".jpg";
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($uploaded_file,PATHINFO_EXTENSION));
 
 // Check if image file is a actual image or fake image
-if(isset($_FILES["avatar"])) {
+if(file_exists($_FILES["avatar"]["tmp_name"]) || is_uploaded_file($_FILES["avatar"]["tmp_name"]) ) {
     $check = getimagesize($_FILES["avatar"]["tmp_name"]);
     if($check !== false) {
       $uploadOk = 1;
@@ -51,7 +53,7 @@ if(isset($_FILES["avatar"])) {
       array_push($alert, "File is not an image.");
         $uploadOk = 0;
     }
-}
+
 
 if ($_FILES["avatar"]["size"] > 500000 * 3) {
   array_push($alert, "Sorry, your file is too large.");
@@ -68,11 +70,19 @@ else if ($uploadOk == 0) {
 } else {
   if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
     array_push($alert, "The file ". basename( $_FILES["avatar"]["name"]). " has been uploaded to ".$target_file);
+    #resize image
+    $fullsize = imagecreatefromjpeg($target_file);
+    list($width, $height) = getimagesize($target_file);
+    $newheight=500;
+    $newwidth=600;
+    $resized = imagecreatetruecolor($newheight, $newwidth);
+    imagecopyresized($resized, $fullsize, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+    imagejpeg($resized, $target_file_resized,100);
   } else {
     array_push($alert, "Sorry, there was an error uploading your file.");
   }
 }
-
+}
 
 
 

@@ -84,7 +84,7 @@ $db->close();
               </div> 
               <div class="col-md-6 col-lg-4 text-center">
                   <h2>  <span style="font-size:2em"  id="count"></span> Détenu(e)s</h2>
-                  <h5>politiques et d'opinions</h5>
+                  <h5>politiques et d'opinion</h5>
               </div> 
               <div class="col-md-6 col-lg-4 text-center">
                   <h2> <span style="font-size:2em"  id="days">   </span> Jours</h2>
@@ -143,6 +143,11 @@ $db->close();
                        ?>
                        <span style="font-size:10px; position:absolute; right:5px; top:2px; color:#eeeeee; z-index:3">
                           <a href="edit.php?id=<?php echo $hero["id"];?>" target="_blank">&#9998;</a>
+                          </span>
+                      <?php }  ?>
+                      <?php if ($hero["released"]==1){ ?>
+                          <span style="position:absolute; right:5px; bottom:10px; opacity:0.3; z-index:3">
+                          <img src="images/free-green.png" alt="avatar" width="40" height="40" class="img-fluid">
                           </span>
                       <?php }?>
                   </div>
@@ -244,7 +249,7 @@ $db->close();
   <script type="module">
       import { CountUp } from './js/countUp.min.js';
       let options = {
-        "duration" : 4
+        "duration" : 5
       }
       window.onload = function() {
             const countUpFridays = new CountUp('fridays', <?php echo $fridays; ?>, options );
